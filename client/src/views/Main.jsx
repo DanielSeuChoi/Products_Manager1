@@ -7,6 +7,9 @@ import ProductsList from '../components/ProductsList';
 const Main = (props) => {
     const [products, setProducts] = useState([]);
     const [loaded, setLoaded] = useState(false);
+    //loaded is considered a primitive type dependency
+    // primitive : not an object has no methods or properties.
+    //primitive data types: string,number,boolean,null, ...
     useEffect(() => {
         axios.get("http://localhost:5000/api/products")
             .then(res => {
@@ -14,7 +17,7 @@ const Main = (props) => {
                 setLoaded(true);
             })
             .catch(err => console.error(err));
-    }, [loaded]);
+    }, [loaded]); //put loaded in the primitive array
     const reversedPro = [...products,].reverse();
     return (
         <div>
