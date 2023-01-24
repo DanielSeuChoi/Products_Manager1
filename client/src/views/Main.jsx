@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProductsForms from '../components/ProductsForms';
 import ProductsList from '../components/ProductsList';
+import ProductForms from '../components/ProductsForms';
 
 
-const Main = (props) => {
+function Main() {
     const [products, setProducts] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    //loaded is considered a primitive type dependency
-    // primitive : not an object has no methods or properties.
-    //primitive data types: string,number,boolean,null, ...
+
     useEffect(() => {
         axios.get("http://localhost:5000/api/products")
-            .then(res => {
+            .then((res) => {
                 setProducts(res.data);
-                setLoaded(true);
+                setLoaded(true)
             })
-            .catch(err => console.error(err));
-    }, [loaded]); //put loaded in the primitive array
+            .catch((err) => console.error(err));
+    }, [loaded]);
+
+    const removeFromDom = (proId) => {
+        setProducts(products.filter((product) => product._id !== proId));
+    };
+
     const reversedPro = [...products,].reverse();
     return (
         <div>
-            <ProductsForms setLoaded={setLoaded} />
+            <ProductForms setLoaded={setLoaded} />
             <hr />
-            {loaded && <ProductsList product={reversedPro} />}
+            {loaded && <ProductsList product={reversedPro} removeFromDom={removeFromDom} />}
         </div>
-    )
+    );
 }
 
 export default Main;

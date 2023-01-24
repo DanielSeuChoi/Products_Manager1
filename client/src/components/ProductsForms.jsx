@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 
-function ProductForms(props) {
+function ProductForms({ setLoaded }) {
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
 
     const onSubmitHandler = e => {
         e.preventDefault();
-        props.setLoaded(false);
-        axios.post('http://localhost:5000/api/products', {
+        setTitle('');
+        setPrice('');
+        setDescription('');
+
+        axios.post("http://localhost:5000/api/products", {
             title,
             price,
             description
         })
-            .then(res => console.log("Response: ", res))
+            .then(res => {
+                console.log("Response: ", res)
+                setLoaded(false);
+            })
             .catch(err => console.log("Error: ", err));
     };
 

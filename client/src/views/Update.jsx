@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+
+
 const Update = (props) => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
@@ -15,7 +18,7 @@ const Update = (props) => {
                 setPrice(res.data.price);
                 setDescription(res.data.description);
             })
-    }, []);
+    }, [id]);
     const updateProduct = e => {
         e.preventDefault();
         axios.put('http://localhost:5000/api/products/' + id, {
@@ -23,7 +26,10 @@ const Update = (props) => {
             price,
             description
         })
-            .then(res => console.log(res))
+            .then(res => {
+                navigate("/");
+                console.log(res)
+            })
             .catch(err => console.error(err));
     }
     return (

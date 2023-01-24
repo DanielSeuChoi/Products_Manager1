@@ -1,6 +1,6 @@
 import './App.css';
 import Main from './views/Main';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import OneProduct from './views/OneProduct';
 import Update from './views/Update';
 
