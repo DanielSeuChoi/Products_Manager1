@@ -8,17 +8,11 @@ import Update from './views/Update';
 function App() {
   return (
     <div className="App">
-      <div>
-
-      </div>
-      <div>
-        <Routes>
-          <Route element={<Main />} path="/" />
-          <Route element={<OneProduct />} path="/:id" />
-          <Route element={<Update />} path="/:id/edit" />
-        </Routes>
-      </div>
-
+      <Routes>
+        <Route element={<Main />} path="/" />
+        <Route element={<OneProduct />} path="/:id" />
+        <Route element={<Update />} path="/:id/edit" />
+      </Routes>
     </div>
   );
 }

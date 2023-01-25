@@ -18,15 +18,21 @@ function Main() {
     }, [loaded]);
 
     const removeFromDom = (proId) => {
-        setProducts(products.filter((product) => product._id !== proId));
+        setProducts(products.filter((products) => products._id !== proId));
     };
+    const createProduct = product => {
+        axios.post('http://localhost:5000/api/products', product)
+            .then(res => {
+                setProducts([...products, res.data]);
+            })
+    }
 
     const reversedPro = [...products,].reverse();
     return (
         <div>
-            <ProductForms setLoaded={setLoaded} />
+            <ProductForms onSubmitHan={createProduct} iniTitle="" iniPrice="" iniDescription="" />
             <hr />
-            {loaded && <ProductsList product={reversedPro} removeFromDom={removeFromDom} />}
+            {loaded && <ProductsList setLoaded={setLoaded} product={reversedPro} removeFromDom={removeFromDom} />}
         </div>
     );
 }

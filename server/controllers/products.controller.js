@@ -1,8 +1,7 @@
 const Products = require('../models/products.models');
 
 const create = (req, res) => {
-    const dingle = { title, price, description } = req.body;
-    Products.create(dingle)
+    Products.create(req.body)
         .then(product => res.status(201).json(product))
         .catch(err => res.status(400).json(err));
 }

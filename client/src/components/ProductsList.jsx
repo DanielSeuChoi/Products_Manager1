@@ -1,30 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import DeleteButton from './DeleteButton';
 
-const ProductsList = (props) => {
-    const { removeFromDom } = props;
-    const deleteProduct = (idsz) => {
-        axios.delete('http://localhost:5000/api/products/' + idsz)
-            .then(res => {
-                removeFromDom(idsz)
-            })
-            .catch((err) => console.error(err))
+function ProductsList({ product, setLoaded }) {
+    const removeFromDom = (proId) => {
+        product.filter(products => products._id !== proId);
+        setLoaded(false);
     };
     return (
-        <div>
-            {props.product.map((product, i) => {
-                return <p key={i} i={i}>
-                    <Link to={"/" + product._id}>
-                        {product.title}
-                    </Link>
-                    <button onClick={(e) => { deleteProduct(product._id) }}>Delete</button>
-                </p>
-            }
+        product && product.map(products => {
+            return (
+                <div key={products._id}>
+                    <div>
+                        <Link to={"/" + products._id}>
+                            {products.title}
+                        </Link>
+                        | |
+                        <DeleteButton proId={products._id} successCallBack={() => removeFromDom(products._id)}>Delete Product</DeleteButton>
+                    </div>
+
+                </div>
             )
-            }
-        </div>
-    )
+        })
+    );
 }
 
-export default ProductsList
+export default ProductsList;
